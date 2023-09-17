@@ -1,12 +1,12 @@
 <?php
 
-namespace VendorName\Skeleton\Commands;
+namespace Joshembling\ImageOptimizer\Commands;
 
 use Illuminate\Console\Command;
 
-class SkeletonCommand extends Command
+class ImageOptimizerCommand extends Command
 {
-    public $signature = 'skeleton';
+    public $signature = 'filament-image-optimizer';
 
     public $description = 'My command';
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace VendorName\Skeleton\Database\Factories;
+namespace Joshembling\ImageOptimizer\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
