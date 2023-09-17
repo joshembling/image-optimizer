@@ -39,8 +39,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Joshembling\\ImageOptimizer\\": "src/",
-            "Joshembling\\ImageOptimizer\\Database\\Factories\\": "database/factories/"
+            "Joshembling\\ImageOptimizer\\": "src/"
         }
     },
     "autoload-dev": {
