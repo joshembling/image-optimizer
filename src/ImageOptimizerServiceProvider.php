@@ -9,12 +9,12 @@ use Filament\Support\Assets\Js;
 use Filament\Support\Facades\FilamentAsset;
 use Filament\Support\Facades\FilamentIcon;
 use Illuminate\Filesystem\Filesystem;
+use Joshembling\ImageOptimizer\Commands\ImageOptimizerCommand;
+use Joshembling\ImageOptimizer\Testing\TestsImageOptimizer;
 use Livewire\Features\SupportTesting\Testable;
 use Spatie\LaravelPackageTools\Commands\InstallCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Joshembling\ImageOptimizer\Commands\ImageOptimizerCommand;
-use Joshembling\ImageOptimizer\Testing\TestsImageOptimizer;
 
 class ImageOptimizerServiceProvider extends PackageServiceProvider
 {
