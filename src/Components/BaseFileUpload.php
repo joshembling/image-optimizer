@@ -1,8 +1,9 @@
 <?php
 
-namespace Filament\Forms\Components;
+namespace Joshembling\ImageOptimizer\Components;
 
 use Closure;
+use Filament\Forms\Components\BaseFileUpload as OriginalBaseFileUpload;
 use Filament\Forms\Get;
 use Filament\Forms\Set;
 use Illuminate\Contracts\Filesystem\Filesystem;
@@ -17,7 +18,7 @@ use League\Flysystem\UnableToCheckFileExistence;
 use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 use Throwable;
 
-class BaseFileUpload extends Field
+class BaseFileUpload extends OriginalBaseFileUpload
 {
     /**
      * @var array<string> | Arrayable | Closure | null
@@ -74,6 +75,7 @@ class BaseFileUpload extends Field
 
     protected function setUp(): void
     {
+        dd('here');
         parent::setUp();
 
         $this->afterStateHydrated(static function (BaseFileUpload $component, string | array | null $state): void {
@@ -177,29 +179,29 @@ class BaseFileUpload extends Field
 
             $compressedImage = null;
             $filename = $component->getUploadedFileNameForStorage($file);
+            $optimize = $component->getOptimization();
+            $resize = $component->getResize();
             //$originalBinaryFile = $file->get();
 
             if (
                 str_contains($file->getMimeType(), 'image') &&
-                ($component->getOptimization() || $component->getResize())
+                ($optimize || $resize)
             ) {
                 $image = InterventionImage::make($file);
 
-                if ($component->getOptimization()) {
-                    $quality = $component->getOptimization() === 'jpeg' ||
-                        $component->getOptimization() === 'jpg' ? 70 : null;
-
-                    $image->encode($component->getOptimization(), $quality);
+                if ($optimize) {
+                    $quality = $optimize === 'jpeg' ||
+                        $optimize === 'jpg' ? 70 : null;
                 }
 
-                if ($component->getResize()) {
+                if ($resize) {
                     $height = null;
                     $width = null;
 
                     if ($image->height() > $image->width()) {
-                        $height = $image->height() - ($image->height() * ($component->getResize() / 100));
+                        $height = $image->height() - ($image->height() * ($resize / 100));
                     } else {
-                        $width = $image->width() - ($image->width() * ($component->getResize() / 100));
+                        $width = $image->width() - ($image->width() * ($resize / 100));
                     }
 
                     $image->resize($width, $height, function ($constraint) {
@@ -207,9 +209,13 @@ class BaseFileUpload extends Field
                     });
                 }
 
-                $compressedImage = $image->encode();
+                if ($optimize) {
+                    $compressedImage = $image->encode($optimize, $quality);
+                } else {
+                    $compressedImage = $image->encode();
+                }
 
-                $filename = self::formatFileName($filename, $component->getOptimization());
+                $filename = self::formatFileName($filename, $optimize);
             }
 
             if ($component->shouldMoveFiles() && ($component->getDiskName() == invade($file)->disk)) {

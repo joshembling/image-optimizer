@@ -46,6 +46,8 @@ class ImageOptimizerServiceProvider extends PackageServiceProvider
             }
         }
 
+        $this->app->bind('Filament\Forms\Components\BaseFileUpload', Joshembling\ImageOptimizer\Components\BaseFileUpload::class);
+
         // Testing
         Testable::mixin(new TestsImageOptimizer());
     }

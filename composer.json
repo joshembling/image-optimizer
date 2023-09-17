@@ -1,6 +1,7 @@
 {
     "name": "joshembling/filament-image-optimizer",
     "description": "Optimize your images before they reach your database.",
+    "version": "1.0.0",
     "keywords": [
         "joshembling",
         "laravel",
