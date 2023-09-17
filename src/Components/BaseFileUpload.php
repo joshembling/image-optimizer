@@ -12,6 +12,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use Intervention\Image\ImageManagerStatic as InterventionImage;
 use League\Flysystem\UnableToCheckFileExistence;
 use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 use Throwable;
@@ -46,6 +47,10 @@ class BaseFileUpload extends Field
     protected int | Closure | null $maxFiles = null;
 
     protected int | Closure | null $minFiles = null;
+
+    protected string | Closure | null $optimize = null;
+
+    protected int | Closure | null $resize = null;
 
     protected bool | Closure $shouldPreserveFilenames = false;
 
@@ -170,6 +175,43 @@ class BaseFileUpload extends Field
                 return null;
             }
 
+            $compressedImage = null;
+            $filename = $component->getUploadedFileNameForStorage($file);
+            //$originalBinaryFile = $file->get();
+
+            if (
+                str_contains($file->getMimeType(), 'image') &&
+                ($component->getOptimization() || $component->getResize())
+            ) {
+                $image = InterventionImage::make($file);
+
+                if ($component->getOptimization()) {
+                    $quality = $component->getOptimization() === 'jpeg' ||
+                        $component->getOptimization() === 'jpg' ? 70 : null;
+
+                    $image->encode($component->getOptimization(), $quality);
+                }
+
+                if ($component->getResize()) {
+                    $height = null;
+                    $width = null;
+
+                    if ($image->height() > $image->width()) {
+                        $height = $image->height() - ($image->height() * ($component->getResize() / 100));
+                    } else {
+                        $width = $image->width() - ($image->width() * ($component->getResize() / 100));
+                    }
+
+                    $image->resize($width, $height, function ($constraint) {
+                        $constraint->aspectRatio();
+                    });
+                }
+
+                $compressedImage = $image->encode();
+
+                $filename = self::formatFileName($filename, $component->getOptimization());
+            }
+
             if ($component->shouldMoveFiles() && ($component->getDiskName() == invade($file)->disk)) {
                 $newPath = trim($component->getDirectory() . '/' . $component->getUploadedFileNameForStorage($file), '/');
 
@@ -180,11 +222,21 @@ class BaseFileUpload extends Field
 
             $storeMethod = $component->getVisibility() === 'public' ? 'storePubliclyAs' : 'storeAs';
 
-            return $file->{$storeMethod}(
-                $component->getDirectory(),
-                $component->getUploadedFileNameForStorage($file),
-                $component->getDiskName(),
-            );
+            if ($compressedImage) {
+                Storage::disk($component->getDiskName())->put(
+                    $component->getDirectory() . '/' . $filename,
+                    $compressedImage->getEncoded()
+                );
+
+                return $component->getDirectory() . '/' . $filename;
+            } else {
+                // Fall back to storing the original file
+                return $file->{$storeMethod}(
+                    $component->getDirectory(),
+                    $component->getUploadedFileNameForStorage($file),
+                    $component->getDiskName()
+                );
+            }
         });
     }
 
@@ -508,6 +560,45 @@ class BaseFileUpload extends Field
     public function getMinSize(): ?int
     {
         return $this->evaluate($this->minSize);
+    }
+
+    public function optimize(string | Closure | null $optimize): static
+    {
+        $this->optimize = $optimize;
+
+        return $this;
+    }
+
+    public function getOptimization(): ?string
+    {
+        return $this->evaluate($this->optimize);
+    }
+
+    public function resize(int | Closure | null $reductionPercentage): static
+    {
+        $this->resize = $reductionPercentage;
+
+        return $this;
+    }
+
+    public function getResize(): ?int
+    {
+        return $this->evaluate($this->resize);
+    }
+
+    public static function formatFilename(string $filename, ?string $format): string
+    {
+        if (! $format) {
+            return $filename;
+        }
+
+        $extension = strrpos($filename, '.');
+
+        if ($extension !== false) {
+            return substr($filename, 0, $extension + 1) . $format;
+        }
+
+        return $filename;
     }
 
     public function getVisibility(): string
