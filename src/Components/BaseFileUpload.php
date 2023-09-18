@@ -3,7 +3,7 @@
 namespace Joshembling\ImageOptimizer\Components;
 
 use Closure;
-use Filament\Forms\Components\BaseFileUpload as OriginalBaseFileUpload;
+use Filament\Forms\Components\Field;
 use Filament\Forms\Get;
 use Filament\Forms\Set;
 use Illuminate\Contracts\Filesystem\Filesystem;
@@ -18,7 +18,7 @@ use League\Flysystem\UnableToCheckFileExistence;
 use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 use Throwable;
 
-class BaseFileUpload extends OriginalBaseFileUpload
+class BaseFileUpload extends Field
 {
     /**
      * @var array<string> | Arrayable | Closure | null
@@ -75,7 +75,6 @@ class BaseFileUpload extends OriginalBaseFileUpload
 
     protected function setUp(): void
     {
-        dd('here');
         parent::setUp();
 
         $this->afterStateHydrated(static function (BaseFileUpload $component, string | array | null $state): void {
@@ -218,6 +217,15 @@ class BaseFileUpload extends OriginalBaseFileUpload
                 $filename = self::formatFileName($filename, $optimize);
             }
 
+            if ($compressedImage) {
+                Storage::disk($component->getDiskName())->put(
+                    $component->getDirectory() . '/' . $filename,
+                    $compressedImage->getEncoded()
+                );
+
+                return $component->getDirectory() . '/' . $filename;
+            }
+
             if ($component->shouldMoveFiles() && ($component->getDiskName() == invade($file)->disk)) {
                 $newPath = trim($component->getDirectory() . '/' . $component->getUploadedFileNameForStorage($file), '/');
 
@@ -228,21 +236,11 @@ class BaseFileUpload extends OriginalBaseFileUpload
 
             $storeMethod = $component->getVisibility() === 'public' ? 'storePubliclyAs' : 'storeAs';
 
-            if ($compressedImage) {
-                Storage::disk($component->getDiskName())->put(
-                    $component->getDirectory() . '/' . $filename,
-                    $compressedImage->getEncoded()
-                );
-
-                return $component->getDirectory() . '/' . $filename;
-            } else {
-                // Fall back to storing the original file
-                return $file->{$storeMethod}(
-                    $component->getDirectory(),
-                    $component->getUploadedFileNameForStorage($file),
-                    $component->getDiskName()
-                );
-            }
+            return $file->{$storeMethod}(
+                $component->getDirectory(),
+                $component->getUploadedFileNameForStorage($file),
+                $component->getDiskName()
+            );
         });
     }
 
@@ -442,6 +440,20 @@ class BaseFileUpload extends OriginalBaseFileUpload
         return $this;
     }
 
+    public function optimize(string | Closure | null $optimize): static
+    {
+        $this->optimize = $optimize;
+
+        return $this;
+    }
+
+    public function resize(int | Closure | null $reductionPercentage): static
+    {
+        $this->resize = $reductionPercentage;
+
+        return $this;
+    }
+
     public function storeFiles(bool | Closure $condition = true): static
     {
         $this->shouldStoreFiles = $condition;
@@ -568,43 +580,14 @@ class BaseFileUpload extends OriginalBaseFileUpload
         return $this->evaluate($this->minSize);
     }
 
-    public function optimize(string | Closure | null $optimize): static
-    {
-        $this->optimize = $optimize;
-
-        return $this;
-    }
-
     public function getOptimization(): ?string
     {
         return $this->evaluate($this->optimize);
     }
 
-    public function resize(int | Closure | null $reductionPercentage): static
-    {
-        $this->resize = $reductionPercentage;
-
-        return $this;
-    }
-
     public function getResize(): ?int
     {
         return $this->evaluate($this->resize);
-    }
-
-    public static function formatFilename(string $filename, ?string $format): string
-    {
-        if (! $format) {
-            return $filename;
-        }
-
-        $extension = strrpos($filename, '.');
-
-        if ($extension !== false) {
-            return substr($filename, 0, $extension + 1) . $format;
-        }
-
-        return $filename;
     }
 
     public function getVisibility(): string
@@ -927,5 +910,20 @@ class BaseFileUpload extends OriginalBaseFileUpload
         if ($fileNamesStatePath = $this->getFileNamesStatePath()) {
             $rules[$fileNamesStatePath] = ['nullable'];
         }
+    }
+
+    public static function formatFilename(string $filename, ?string $format): string
+    {
+        if (! $format) {
+            return $filename;
+        }
+
+        $extension = strrpos($filename, '.');
+
+        if ($extension !== false) {
+            return substr($filename, 0, $extension + 1) . $format;
+        }
+
+        return $filename;
     }
 }
