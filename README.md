@@ -1,8 +1,6 @@
 # Optimize your images before they reach your database.
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/joshembling/filament-image-optimizer.svg?style=flat-square)](https://packagist.org/packages/joshembling/filament-image-optimizer)
-[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/joshembling/filament-image-optimizer/run-tests.yml?branch=3.x&label=tests&style=flat-square)](https://github.com/joshembling/filament-image-optimizer/actions?query=workflow%3Arun-tests+branch%3A3.x)
-[![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/joshembling/filament-image-optimizer/fix-php-code-style-issues.yml?branch=3.x&label=code%20style&style=flat-square)](https://github.com/joshembling/filament-image-optimizer/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3A3.x)
 [![Total Downloads](https://img.shields.io/packagist/dt/joshembling/filament-image-optimizer.svg?style=flat-square)](https://packagist.org/packages/joshembling/filament-image-optimizer)
 
 When you currently upload an image using the native Filament component `FileUpload`, the original file is saved without any compression or conversion.
