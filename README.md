@@ -96,9 +96,9 @@ FileUpload::make('attachment')
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 
 SpatieMediaLibraryFileUpload::make('attachment')
-    ->image()
+    	->image()
 	->optimize('webp')
-    ->resize(50),
+    	->resize(50),
 `````
 
 ### Multiple images
@@ -109,20 +109,20 @@ You can also do this with multiple images - all images will be converted to the 
 use Filament\Forms\Components\FileUpload;
 
 FileUpload::make('attachment')
-    ->image()
+    	->image()
 	->multiple()
 	->optimize('jpg')
-    ->resize(50),
+    	->resize(50),
 `````
 
 `````php
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 
 SpatieMediaLibraryFileUpload::make('attachment')
-    ->image()
+    	->image()
 	->multiple()
 	->optimize('jpg')
-    ->resize(50),
+    	->resize(50),
 `````
 
 ### Examples 
