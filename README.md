@@ -87,18 +87,18 @@ You can combine these two methods for maximum optimization.
 use Filament\Forms\Components\FileUpload;
 
 FileUpload::make('attachment')
-	->image()
-	->optimize('webp')
-	->resize(50),
+		->image()
+		->optimize('webp')
+		->resize(50),
 `````
 
 `````php
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 
 SpatieMediaLibraryFileUpload::make('attachment')
-    ->image()
-	->optimize('webp')
-    ->resize(50),
+    	->image()
+		->optimize('webp')
+    	->resize(50),
 `````
 
 ### Multiple images
@@ -109,20 +109,20 @@ You can also do this with multiple images - all images will be converted to the 
 use Filament\Forms\Components\FileUpload;
 
 FileUpload::make('attachment')
-    ->image()
-	->multiple()
-	->optimize('jpg')
-    ->resize(50),
+		->image()
+		->multiple()
+		->optimize('jpg')
+		->resize(50),
 `````
 
 `````php
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 
 SpatieMediaLibraryFileUpload::make('attachment')
-    ->image()
-	->multiple()
-	->optimize('jpg')
-    ->resize(50),
+		->image()
+		->multiple()
+		->optimize('jpg')
+		->resize(50),
 `````
 
 ### Examples 
