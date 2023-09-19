@@ -107,7 +107,7 @@ use Filament\Forms\Components\FileUpload;
 FileUpload::make('attachment')
     ->image()
 	->multiple()
-	->optimize('webp')
+	->optimize('jpg')
     ->resize(50),
 ```
 
@@ -117,7 +117,7 @@ use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 SpatieMediaLibraryFileUpload::make('attachment')
     ->image()
 	->multiple()
-	->optimize('webp')
+	->optimize('jpg')
     ->resize(50),
 ```
 
