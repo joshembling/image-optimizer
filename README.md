@@ -35,7 +35,7 @@ Before uploading your image, you may choose to optimize it by converting to your
 
 E.g. I want to convert my image to 'webp': 
 
-```php
+```
 use Filament\Forms\Components\FileUpload;
 
 FileUpload::make('attachment')
@@ -45,7 +45,7 @@ FileUpload::make('attachment')
 
 You can do exactly the same using `SpatieMediaLibraryFileUpload`:
 
-```php
+```
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 
 SpatieMediaLibraryFileUpload::make('attachment')
@@ -59,7 +59,7 @@ You may also want to resize an image by passing in a percentage you would like t
 
 E.g. I'd like to reduce my image (1280px x 720px) by 50%:
 
-```php
+```
 use Filament\Forms\Components\FileUpload;
 
 FileUpload::make('attachment')
@@ -71,7 +71,7 @@ Uploaded image size is 640px x 360px.
 
 You can do the same using `SpatieMediaLibraryFileUpload`:
 
-```php
+```
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 
 SpatieMediaLibraryFileUpload::make('attachment')
@@ -83,7 +83,7 @@ SpatieMediaLibraryFileUpload::make('attachment')
 
 You can combine these two methods for maximum optimization.
 
-```php
+```
 use Filament\Forms\Components\FileUpload;
 
 FileUpload::make('attachment')
@@ -92,7 +92,7 @@ FileUpload::make('attachment')
     ->resize(50),
 ```
 
-```php
+```
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 
 SpatieMediaLibraryFileUpload::make('attachment')
@@ -105,7 +105,7 @@ SpatieMediaLibraryFileUpload::make('attachment')
 
 You can also do this with multiple images - all images will be converted to the same format and reduced with the same percentage passed in. Just chain on `multiple()` to your upload:
 
-```php
+```
 use Filament\Forms\Components\FileUpload;
 
 FileUpload::make('attachment')
@@ -115,7 +115,7 @@ FileUpload::make('attachment')
     ->resize(50),
 ```
 
-```php
+```
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 
 SpatieMediaLibraryFileUpload::make('attachment')
