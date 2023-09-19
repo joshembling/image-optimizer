@@ -5,9 +5,15 @@
 [![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/joshembling/filament-image-optimizer/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/joshembling/filament-image-optimizer/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/joshembling/filament-image-optimizer.svg?style=flat-square)](https://packagist.org/packages/joshembling/filament-image-optimizer)
 
+When you currently upload an image using the native Filament component `FileUpload`, the original file is saved without any compression or conversion.
 
+Additionally, if you upload an image and use conversions with `SpatieMediaLibraryFileUpload`, the original file is saved with its corresponding versions provided on your model. 
 
-This is where your description should go. Limit it to a paragraph or two. Consider adding a small example.
+What if you'd rather convert and reduce the image(s) before reaching your database/S3 bucket? Especially in the case where you know you'll never need to save the original image sizes the user has uploaded.
+
+🤳 **This is where Filament Image Optimizer comes in**. 
+
+You use the same components as you have been doing and have access to two additional methods for maximum optimization, saving you a lot of disk space in the process. 🎉
 
 ## Installation
 
@@ -17,44 +23,109 @@ You can install the package via composer:
 composer require joshembling/filament-image-optimizer
 ```
 
-You can publish and run the migrations with:
-
-```bash
-php artisan vendor:publish --tag="filament-image-optimizer-migrations"
-php artisan migrate
-```
-
-You can publish the config file with:
-
-```bash
-php artisan vendor:publish --tag="filament-image-optimizer-config"
-```
-
-Optionally, you can publish the views using
-
-```bash
-php artisan vendor:publish --tag="filament-image-optimizer-views"
-```
-
-This is the contents of the published config file:
-
-```php
-return [
-];
-```
-
 ## Usage
 
+### Optimizing images
+
+Before uploading your image, you may choose to optimize it by converting to your chosen format. The file saved to your disk will be the converted version only.
+
+E.g. I want to convert my image to 'webp': 
+
 ```php
-$imageOptimizer = new Joshembling\ImageOptimizer();
-echo $imageOptimizer->echoPhrase('Hello, Joshembling!');
+use Filament\Forms\Components\FileUpload;
+
+FileUpload::make('attachment')
+    ->image()
+    ->optimize('webp'),
 ```
 
-## Testing
+You can do exactly the same using `SpatieMediaLibraryFileUpload`:
 
-```bash
-composer test
+```php
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
+
+SpatieMediaLibraryFileUpload::make('attachment')
+    ->image()
+    ->optimize('webp'),
 ```
+
+### Resizing images
+
+You may also want to resize an image by passing in a percentage you would like to reduce the image by. This will also maintain aspect ratio.
+
+E.g. I'd like to reduce my image (1280px x 720px) by 50%:
+
+```php
+use Filament\Forms\Components\FileUpload;
+
+FileUpload::make('attachment')
+    ->image()
+    ->resize(50),
+```
+
+Uploaded image size is 640px x 360px.
+
+You can do the same using `SpatieMediaLibraryFileUpload`:
+
+```php
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
+
+SpatieMediaLibraryFileUpload::make('attachment')
+    ->image()
+    ->resize(50),
+```
+
+### Combining methods
+
+You can combine these two methods for maximum optimization.
+
+```php
+use Filament\Forms\Components\FileUpload;
+
+FileUpload::make('attachment')
+    ->image()
+	->optimize('webp')
+    ->resize(50),
+```
+
+```php
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
+
+SpatieMediaLibraryFileUpload::make('attachment')
+    ->image()
+	->optimize('webp')
+    ->resize(50),
+```
+
+### Multiple images
+
+You can also do this with multiple images - all images will be converted to the same format and reduced with the same percentage passed in. Just chain on `multiple()` to your upload:
+
+```php
+use Filament\Forms\Components\FileUpload;
+
+FileUpload::make('attachment')
+    ->image()
+	->multiple()
+	->optimize('webp')
+    ->resize(50),
+```
+
+```php
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
+
+SpatieMediaLibraryFileUpload::make('attachment')
+    ->image()
+	->multiple()
+	->optimize('webp')
+    ->resize(50),
+```
+
+### Examples 
+
+![Before](images/before.jpg) 
+
+![After](images/after.jpg)
 
 ## Changelog
 

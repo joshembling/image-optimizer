@@ -133,7 +133,7 @@ class BaseFileUpload extends Field
             $storage = $component->getDisk();
 
             try {
-                if (! $storage->exists($file)) {
+                if (!$storage->exists($file)) {
                     return null;
                 }
             } catch (UnableToCheckFileExistence $exception) {
@@ -169,7 +169,7 @@ class BaseFileUpload extends Field
 
         $this->saveUploadedFileUsing(static function (BaseFileUpload $component, TemporaryUploadedFile $file): ?string {
             try {
-                if (! $file->exists()) {
+                if (!$file->exists()) {
                     return null;
                 }
             } catch (UnableToCheckFileExistence $exception) {
@@ -357,7 +357,7 @@ class BaseFileUpload extends Field
      */
     public function disablePreview(bool | Closure $condition = true): static
     {
-        $this->previewable(fn (BaseFileUpload $component): bool => ! $component->evaluate($condition));
+        $this->previewable(fn (BaseFileUpload $component): bool => !$component->evaluate($condition));
 
         return $this;
     }
@@ -612,7 +612,7 @@ class BaseFileUpload extends Field
 
     public function getFileNamesStatePath(): ?string
     {
-        if (! $this->fileNamesStatePath) {
+        if (!$this->fileNamesStatePath) {
             return null;
         }
 
@@ -649,7 +649,7 @@ class BaseFileUpload extends Field
                 ["{$name}.*" => $this->getValidationAttribute()],
             );
 
-            if (! $validator->fails()) {
+            if (!$validator->fails()) {
                 return;
             }
 
@@ -669,7 +669,7 @@ class BaseFileUpload extends Field
 
         $callback = $this->deleteUploadedFileUsing;
 
-        if (! $callback) {
+        if (!$callback) {
             return $this;
         }
 
@@ -685,7 +685,7 @@ class BaseFileUpload extends Field
         $files = $this->getState();
         $file = $files[$fileKey] ?? null;
 
-        if (! $file) {
+        if (!$file) {
             return null;
         }
 
@@ -711,7 +711,7 @@ class BaseFileUpload extends Field
         }
 
         $this->evaluate(function (BaseFileUpload $component, Get $get, Set $set) use ($file, $statePath) {
-            if (! $component->isMultiple()) {
+            if (!$component->isMultiple()) {
                 $set($statePath, null);
 
                 return;
@@ -732,7 +732,7 @@ class BaseFileUpload extends Field
      */
     public function reorderUploadedFiles(array $fileKeys): void
     {
-        if (! $this->isReorderable) {
+        if (!$this->isReorderable) {
             return;
         }
 
@@ -761,7 +761,7 @@ class BaseFileUpload extends Field
 
             $callback = $this->getUploadedFileUsing;
 
-            if (! $callback) {
+            if (!$callback) {
                 return [$fileKey => null];
             }
 
@@ -782,18 +782,18 @@ class BaseFileUpload extends Field
             return;
         }
 
-        if (! $this->shouldStoreFiles()) {
+        if (!$this->shouldStoreFiles()) {
             return;
         }
 
         $state = array_filter(array_map(function (TemporaryUploadedFile | string $file) {
-            if (! $file instanceof TemporaryUploadedFile) {
+            if (!$file instanceof TemporaryUploadedFile) {
                 return $file;
             }
 
             $callback = $this->saveUploadedFileUsing;
 
-            if (! $callback) {
+            if (!$callback) {
                 $file->delete();
 
                 return $file;
@@ -832,7 +832,7 @@ class BaseFileUpload extends Field
         }
 
         $this->evaluate(function (BaseFileUpload $component, Get $get, Set $set) use ($file, $fileName, $statePath) {
-            if (! $component->isMultiple()) {
+            if (!$component->isMultiple()) {
                 $set($statePath, $fileName);
 
                 return;
@@ -914,7 +914,7 @@ class BaseFileUpload extends Field
 
     public static function formatFilename(string $filename, ?string $format): string
     {
-        if (! $format) {
+        if (!$format) {
             return $filename;
         }
 
