@@ -25,6 +25,10 @@ composer require joshembling/filament-image-optimizer
 
 ## Usage
 
+### Filament version
+
+You must be using [Filament v3.x](https://filamentphp.com/docs/3.x/panels/installation) to have access to this plugin.
+
 ### Optimizing images
 
 Before uploading your image, you may choose to optimize it by converting to your chosen format. The file saved to your disk will be the converted version only.
