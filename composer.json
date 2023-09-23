@@ -1,15 +1,16 @@
 {
-    "name": "joshembling/filament-image-optimizer",
+    "name": "joshembling/image-optimizer",
     "description": "Optimize your images before they reach your database.",
+    "version": "1.0.0",
     "keywords": [
         "joshembling",
         "laravel",
-        "filament-image-optimizer"
+        "image-optimizer"
     ],
-    "homepage": "https://github.com/joshembling/filament-image-optimizer",
+    "homepage": "https://github.com/joshembling/image-optimizer",
     "support": {
-        "issues": "https://github.com/joshembling/filament-image-optimizer/issues",
-        "source": "https://github.com/joshembling/filament-image-optimizer"
+        "issues": "https://github.com/joshembling/image-optimizer/issues",
+        "source": "https://github.com/joshembling/image-optimizer"
     },
     "license": "MIT",
     "authors": [

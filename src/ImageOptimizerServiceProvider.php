@@ -14,7 +14,7 @@ use Spatie\LaravelPackageTools\PackageServiceProvider;
 
 class ImageOptimizerServiceProvider extends PackageServiceProvider
 {
-    public static string $name = 'filament-image-optimizer';
+    public static string $name = 'image-optimizer';
 
     public function boot()
     {
@@ -29,7 +29,7 @@ class ImageOptimizerServiceProvider extends PackageServiceProvider
                     ->publishConfigFile()
                     ->publishMigrations()
                     ->askToRunMigrations()
-                    ->askToStarRepoOnGitHub('joshembling/filament-image-optimizer');
+                    ->askToStarRepoOnGitHub('joshembling/image-optimizer');
             });
 
         $configFileName = $package->shortName();
@@ -49,8 +49,8 @@ class ImageOptimizerServiceProvider extends PackageServiceProvider
         if (app()->runningInConsole()) {
             foreach (app(Filesystem::class)->files(__DIR__ . '/../stubs/') as $file) {
                 $this->publishes([
-                    $file->getRealPath() => base_path("stubs/filament-image-optimizer/{$file->getFilename()}"),
-                ], 'filament-image-optimizer-stubs');
+                    $file->getRealPath() => base_path("stubs/image-optimizer/{$file->getFilename()}"),
+                ], 'image-optimizer-stubs');
             }
         }
 
