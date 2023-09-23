@@ -2,6 +2,10 @@
 
 All notable changes to `image-optimizer` will be documented in this file.
 
+## 1.0.3 - 2023-09-23
+
+**Full Changelog**: https://github.com/joshembling/image-optimizer/compare/v1.0.2...v1.0.3
+
 ## 1.0.2 - 2023-09-23
 
 Package name and action changes
