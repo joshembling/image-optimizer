@@ -2,6 +2,22 @@
 
 All notable changes to `image-optimizer` will be documented in this file.
 
+## 1.0.2 - 2023-09-23
+
+Package name and action changes
+
+### What's Changed
+
+- Bump actions/checkout from 3 to 4 by @dependabot in https://github.com/joshembling/image-optimizer/pull/1
+- Revert "Bump actions/checkout from 3 to 4" by @joshembling in https://github.com/joshembling/image-optimizer/pull/2
+
+### New Contributors
+
+- @dependabot made their first contribution in https://github.com/joshembling/image-optimizer/pull/1
+- @joshembling made their first contribution in https://github.com/joshembling/image-optimizer/pull/2
+
+**Full Changelog**: https://github.com/joshembling/image-optimizer/compare/v1.0.1...v1.0.2
+
 ## 1.0.1 - 2023-09-23
 
 Documentation update
