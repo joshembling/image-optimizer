@@ -3,6 +3,7 @@
 namespace Joshembling\ImageOptimizer\Components;
 
 use Closure;
+use Filament\Forms\Components\FileUpload;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Intervention\Image\ImageManagerStatic as InterventionImage;
