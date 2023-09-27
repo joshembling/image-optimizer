@@ -1,9 +1,13 @@
 {
     "name": "joshembling/image-optimizer",
-    "description": "Optimize your images before they reach your database.",
+    "description": "Optimize your Filament images before they reach your database.",
     "keywords": [
         "joshembling",
         "laravel",
+        "filament",
+        "filamentphp",
+        "image",
+        "optimization",
         "image-optimizer"
     ],
     "homepage": "https://github.com/joshembling/image-optimizer",
