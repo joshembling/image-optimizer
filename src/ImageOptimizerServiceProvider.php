@@ -3,11 +3,11 @@
 namespace Joshembling\ImageOptimizer;
 
 use Filament\Forms\Components\BaseFileUpload;
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Foundation\AliasLoader;
 use Joshembling\ImageOptimizer\Components\BaseFileUpload as CustomBaseFileUpload;
-use Joshembling\ImageOptimizer\Testing\TestsImageOptimizer;
-use Livewire\Features\SupportTesting\Testable;
+use Joshembling\ImageOptimizer\Components\SpatieMediaLibraryFileUpload as CustomSpatieMediaLibraryFileUpload;
 use Spatie\LaravelPackageTools\Commands\InstallCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
@@ -19,6 +19,7 @@ class ImageOptimizerServiceProvider extends PackageServiceProvider
     public function boot()
     {
         AliasLoader::getInstance()->alias(BaseFileUpload::class, CustomBaseFileUpload::class);
+        AliasLoader::getInstance()->alias(SpatieMediaLibraryFileUpload::class, CustomSpatieMediaLibraryFileUpload::class);
     }
 
     public function configurePackage(Package $package): void
@@ -53,8 +54,5 @@ class ImageOptimizerServiceProvider extends PackageServiceProvider
                 ], 'image-optimizer-stubs');
             }
         }
-
-        // Testing
-        Testable::mixin(new TestsImageOptimizer());
     }
 }
