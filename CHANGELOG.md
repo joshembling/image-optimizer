@@ -2,6 +2,12 @@
 
 All notable changes to `image-optimizer` will be documented in this file.
 
+## 1.1.1 - 2023-09-27
+
+Fixes FileUpload class import
+
+**Full Changelog**: https://github.com/joshembling/image-optimizer/compare/v1.1.0...v1.1.1
+
 ## 1.1.0 - 2023-09-27
 
 Fixes Spatie Media Library support
