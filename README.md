@@ -13,6 +13,23 @@ What if you'd rather convert and reduce the image(s) before reaching your databa
 
 You use the same components as you have been doing and have access to two additional methods for maximum optimization, saving you a lot of disk space in the process. 🎉
 
+## Contents
+
+- [Contents](#contents)
+- [Installation](#installation)
+- [Usage](#usage)
+	- [Optimizing Images](#optimizing-images)
+	- [Resizing Images](#resizing-images)
+	- [Combining Methods](#combining-methods)
+	- [Multiple Images](#multiple-images)
+	- [Examples](#examples)
+	- [Debugging](#debugging)
+- [Changelog](#changelog)
+- [Contributing](#contributing)
+- [Security Vulnerabilities](#security-vulnerabilities)
+- [Credits](#credits)
+- [Licence](#license)
+
 ## Installation
 
 You can install the package via composer:
@@ -26,6 +43,10 @@ composer require joshembling/image-optimizer
 ### Filament version
 
 You must be using [Filament v3.x](https://filamentphp.com/docs/3.x/panels/installation) to have access to this plugin.
+
+### Server
+
+[GD Library](https://www.php.net/manual/en/image.installation.php) must be installed on your server to compress images.
 
 ### Optimizing images
 
@@ -128,6 +149,12 @@ SpatieMediaLibraryFileUpload::make('attachment')
 ![Before](images/before.jpg) 
 
 ![After](images/after.jpg)
+
+### Debugging
+
+- If you see a 'not found' exception, including "Method `optimize`" or "Method `resize`", ensure you run `composer update` so that your lock file is in sync with your `composer.json`. 
+
+- You might see a 'Waiting for size' message and an infinite loading state on the component and the likely cause of this is a CORS issue. This can be quickly be resolved by ensuring you are serving and upload images from the same domain. Check your Javascript console for more information.
 
 ## Changelog
 
