@@ -29,6 +29,11 @@ class SpatieMediaLibraryFileUpload extends FileUpload
     /**
      * @var array<string, mixed> | Closure | null
      */
+    protected array | Closure | null $customHeaders = null;
+
+    /**
+     * @var array<string, mixed> | Closure | null
+     */
     protected array | Closure | null $customProperties = null;
 
     /**
@@ -41,6 +46,8 @@ class SpatieMediaLibraryFileUpload extends FileUpload
      */
     protected array | Closure | null $properties = null;
 
+    protected ?Closure $filterMedia = null;
+
     protected function setUp(): void
     {
         parent::setUp();
@@ -50,7 +57,11 @@ class SpatieMediaLibraryFileUpload extends FileUpload
             $files = $record->load('media')->getMedia($component->getCollection())
                 ->when(
                     ! $component->isMultiple(),
-                    fn (Collection $files): Collection => $files->take(1),
+                    fn (Collection $files): Collection => $files->take(1)
+                        ->when(
+                            $component->hasMediaFilter(),
+                            fn (Collection $files) => $component->getFilteredMedia($files)
+                        ),
                 )
                 ->mapWithKeys(function (Media $file): array {
                     $uuid = $file->getAttributeValue('uuid');
@@ -167,6 +178,7 @@ class SpatieMediaLibraryFileUpload extends FileUpload
             $mediaAdder = $record->addMediaFromString($compressedImage ?? $originalBinaryFile);
 
             $media = $mediaAdder
+                ->addCustomHeaders($component->getCustomHeaders())
                 ->usingFileName($filename)
                 ->usingName($component->getMediaName($file) ?? pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME))
                 ->storingConversionsOnDisk($component->getConversionsDisk() ?? '')
@@ -217,11 +229,28 @@ class SpatieMediaLibraryFileUpload extends FileUpload
     }
 
     /**
+     * @param  array<string, mixed> | Closure | null  $headers
+     */
+    public function customHeaders(array | Closure | null $headers): static
+    {
+        $this->customHeaders = $headers;
+
+        return $this;
+    }
+
+    /**
      * @param  array<string, mixed> | Closure | null  $properties
      */
     public function customProperties(array | Closure | null $properties): static
     {
         $this->customProperties = $properties;
+
+        return $this;
+    }
+
+    public function filterMedia(?Closure $filterMedia): static
+    {
+        $this->filterMedia = $filterMedia;
 
         return $this;
     }
@@ -261,6 +290,7 @@ class SpatieMediaLibraryFileUpload extends FileUpload
         $record
             ->getMedia($this->getCollection())
             ->whereNotIn('uuid', array_keys($this->getState() ?? []))
+            ->when($this->hasMediaFilter(), fn (Collection $files) => $this->getFilteredMedia($files))
             ->each(fn (Media $media) => $media->delete());
     }
 
@@ -277,6 +307,14 @@ class SpatieMediaLibraryFileUpload extends FileUpload
     public function getConversionsDisk(): ?string
     {
         return $this->evaluate($this->conversionsDisk);
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    public function getCustomHeaders(): array
+    {
+        return $this->evaluate($this->customHeaders) ?? [];
     }
 
     /**
@@ -301,6 +339,18 @@ class SpatieMediaLibraryFileUpload extends FileUpload
     public function getProperties(): array
     {
         return $this->evaluate($this->properties) ?? [];
+    }
+
+    public function getFilteredMedia(Collection $media): Collection
+    {
+        return $this->evaluate($this->filterMedia, [
+            'media' => $media,
+        ]) ?? $media;
+    }
+
+    public function hasMediaFilter(): bool
+    {
+        return $this->filterMedia instanceof Closure;
     }
 
     public function hasResponsiveImages(): bool
