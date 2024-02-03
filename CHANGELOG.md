@@ -2,6 +2,12 @@
 
 All notable changes to `image-optimizer` will be documented in this file.
 
+## v1.3.1 - 2024-02-03
+
+- Updates documentation around versioning
+
+**Full Changelog**: https://github.com/joshembling/image-optimizer/compare/v1.3.0...v1.3.1
+
 ## v1.3.0 - 2024-01-28
 
 - Fixes https://github.com/joshembling/image-optimizer/issues/9 with upgrades to latest Filament changes in v3.2^
