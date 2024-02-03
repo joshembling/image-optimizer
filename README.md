@@ -32,10 +32,15 @@ You use the same components as you have been doing and have access to two additi
 
 ## Installation
 
-You can install the package via composer:
+You can install the package via composer, which currently works with the latest Filament version (^3.2):
 
 ```bash
 composer require joshembling/image-optimizer
+```
+
+If you are using Filament 3.0 or 3.1 install with: 
+```bash
+composer require joshembling/image-optimizer:v1.2
 ```
 
 ## Usage
