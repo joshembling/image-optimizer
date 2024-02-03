@@ -44,6 +44,14 @@ composer require joshembling/image-optimizer
 
 You must be using [Filament v3.x](https://filamentphp.com/docs/3.x/panels/installation) to have access to this plugin.
 
+For specific versions that match your Filament and Image Optimizer installations please see the table below:
+
+| Filament version	| Image Optimizer version |
+| ----------------- | ----------------------- |
+| ^3.0 | 1.2 |
+| ^3.1 | 1.2 |
+| ^3.2 | ^1.3 |
+
 ### Server
 
 [GD Library](https://www.php.net/manual/en/image.installation.php) must be installed on your server to compress images.
@@ -115,9 +123,9 @@ FileUpload::make('attachment')
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 
 SpatieMediaLibraryFileUpload::make('attachment')
-    	->image()
+    ->image()
 	->optimize('webp')
-    	->resize(50),
+    ->resize(50),
 `````
 
 ### Multiple images
@@ -128,20 +136,20 @@ You can also do this with multiple images - all images will be converted to the 
 use Filament\Forms\Components\FileUpload;
 
 FileUpload::make('attachment')
-    	->image()
+    ->image()
 	->multiple()
 	->optimize('jpg')
-    	->resize(50),
+    ->resize(50),
 `````
 
 `````php
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 
 SpatieMediaLibraryFileUpload::make('attachment')
-    	->image()
+    ->image()
 	->multiple()
 	->optimize('jpg')
-    	->resize(50),
+    ->resize(50),
 `````
 
 ### Examples 
