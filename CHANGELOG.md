@@ -2,6 +2,13 @@
 
 All notable changes to `image-optimizer` will be documented in this file.
 
+## v1.4.0 - 2024-03-17
+
+- Adds support for Laravel 11
+- Minimum PHP requirement now 8.2
+
+**Full Changelog**: https://github.com/joshembling/image-optimizer/compare/v1.3.1...v1.4.0
+
 ## v1.3.1 - 2024-02-03
 
 - Updates documentation around versioning
