@@ -32,7 +32,7 @@ You use the same components as you have been doing and have access to two additi
 
 ## Installation
 
-You can install the package via composer, which currently works with the latest Filament version (^3.2) and Laravel 10:
+You can install the package via composer, which currently works with the latest Filament version (^3.2) and Laravel 10 & 11:
 
 ```bash
 composer require joshembling/image-optimizer
@@ -49,13 +49,14 @@ composer require joshembling/image-optimizer:v1.2
 
 You must be using [Filament v3.x](https://filamentphp.com/docs/3.x/panels/installation) to have access to this plugin.
 
-For specific versions that match your Filament and Image Optimizer installations please see the table below:
+For specific versions that match your PHP, Laravel, Filament and Image Optimizer installations please see the table below:
 
-| Laravel version | Filament version | Image Optimizer version |
-| ----- | -----| ----- |
-| 10 | ^3.0 | 1.2 |
-| 10 | ^3.1 | 1.2 |
-| 10 | ^3.2 | ^1.3 |
+| PHP | Laravel version | Filament version | Image Optimizer version |
+| ----- | ----- | -----| ----- |
+| ^8.1 | ^10.0 | ^3.0 | 1.2 |
+| ^8.1 | ^10.0 | ^3.1 | 1.2 |
+| ^8.1 | ^10.0 | ^3.2 | ~1.3 |
+| ^8.2 | ^10.0, ^11.0 | ^3.2 | ^1.4 |
 
 ### Server
 
