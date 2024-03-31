@@ -9,8 +9,8 @@ use Illuminate\Support\Facades\Facade;
  */
 class ImageOptimizer extends Facade
 {
-    protected static function getFacadeAccessor()
+    protected static function getFacadeAccessor(): string
     {
-        return \Joshembling\ImageOptimizer\ImageOptimizer::class;
+        return self::class;
     }
 }
