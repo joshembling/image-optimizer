@@ -2,6 +2,18 @@
 
 All notable changes to `image-optimizer` will be documented in this file.
 
+## v1.4.1 - 2024-06-22
+
+### What's Changed
+
+* fix: undefined class facade ImageOptimizer by @ahmadrio in https://github.com/joshembling/image-optimizer/pull/24
+
+### New Contributors
+
+* @ahmadrio made their first contribution in https://github.com/joshembling/image-optimizer/pull/24
+
+**Full Changelog**: https://github.com/joshembling/image-optimizer/compare/v1.4.0...v1.4.1
+
 ## v1.4.0 - 2024-03-17
 
 - Adds support for Laravel 11
