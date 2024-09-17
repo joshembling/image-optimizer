@@ -278,9 +278,9 @@ class BaseFileUpload extends Field
 
     public function callAfterStateUpdated(): static
     {
-        if ($callback = $this->afterStateUpdated) {
-            $state = $this->getState();
+        $state = $this->getState();
 
+        foreach ($this->afterStateUpdated as $callback) {
             $this->evaluate($callback, [
                 'state' => $this->isMultiple() ? $state : Arr::first($state ?? []),
             ]);
