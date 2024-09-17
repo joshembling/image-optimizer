@@ -2,6 +2,18 @@
 
 All notable changes to `image-optimizer` will be documented in this file.
 
+## v1.4.2 - 2024-09-17
+
+### What's Changed
+
+* handle afterStateUpdated as array by @cleeimpro in https://github.com/joshembling/image-optimizer/pull/33
+
+### New Contributors
+
+* @cleeimpro made their first contribution in https://github.com/joshembling/image-optimizer/pull/33
+
+**Full Changelog**: https://github.com/joshembling/image-optimizer/compare/v1.4.1...v1.4.2
+
 ## v1.4.1 - 2024-06-22
 
 ### What's Changed
