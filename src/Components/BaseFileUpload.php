@@ -201,7 +201,7 @@ class BaseFileUpload extends Field
             $filename = $component->getUploadedFileNameForStorage($file);
             $optimize = $component->getOptimization();
             $resize = $component->getResize();
-            //$originalBinaryFile = $file->get();
+            // $originalBinaryFile = $file->get();
 
             if (
                 str_contains($file->getMimeType(), 'image') &&
