@@ -140,38 +140,58 @@ class SpatieMediaLibraryFileUpload extends FileUpload
             $compressedImage = null;
             $filename = $component->getUploadedFileNameForStorage($file);
             $originalBinaryFile = $file->get();
+            $optimize = $component->getOptimization();
+            $resize = $component->getResize();
+            $maxImageWidth = $component->getMaxImageWidth();
+            $maxImageHeight = $component->getMaxImageHeight();
+            $doResize = false;
+            $imageHeight = null;
+            $imageWidth = null;
 
             if (
                 str_contains($file->getMimeType(), 'image') &&
-                ($component->getOptimization() || $component->getResize())
+                ($optimize || $resize || $maxImageWidth || $maxImageHeight)
             ) {
                 $image = InterventionImage::make($originalBinaryFile);
 
-                if ($component->getOptimization()) {
-                    $quality = $component->getOptimization() === 'jpeg' ||
-                        $component->getOptimization() === 'jpg' ? 70 : null;
-
-                    $image->encode($component->getOptimization(), $quality);
+                if ($optimize) {
+                    $quality = $optimize === 'jpeg' ||
+                               $optimize === 'jpg' ? 70 : null;
                 }
 
-                if ($component->getResize()) {
-                    $height = null;
-                    $width = null;
+                if ($maxImageWidth && $image->width() > $maxImageWidth) {
+                    $doResize = true;
+                    $imageWidth = $maxImageWidth;
+                }
+
+                if ($maxImageHeight && $image->height() > $maxImageHeight) {
+                    $doResize = true;
+                    $imageHeight = $maxImageHeight;
+                }
+
+                if ($resize) {
+                    $doResize = true;
 
                     if ($image->height() > $image->width()) {
-                        $height = $image->height() - ($image->height() * ($component->getResize() / 100));
+                        $imageHeight = $image->height() - ($image->height() * ($resize / 100));
                     } else {
-                        $width = $image->width() - ($image->width() * ($component->getResize() / 100));
+                        $imageWidth = $image->width() - ($image->width() * ($resize / 100));
                     }
+                }
 
-                    $image->resize($width, $height, function ($constraint) {
+                if ($doResize) {
+                    $image->resize($imageWidth, $imageHeight, function ($constraint) {
                         $constraint->aspectRatio();
                     });
                 }
 
-                $compressedImage = $image->encode();
+                if ($optimize) {
+                    $compressedImage = $image->encode($optimize, $quality);
+                } else {
+                    $compressedImage = $image->encode();
+                }
 
-                $filename = self::formatFileName($filename, $component->getOptimization());
+                $filename = self::formatFileName($filename, $optimize);
             }
 
             /** @var FileAdder $mediaAdder */
