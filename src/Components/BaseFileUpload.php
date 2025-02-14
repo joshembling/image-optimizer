@@ -207,7 +207,7 @@ class BaseFileUpload extends Field
             $resize = $component->getResize();
             $maxImageWidth = $component->getMaxImageWidth();
             $maxImageHeight = $component->getMaxImageHeight();
-            $doResize = false;
+            $shouldResize = false;
             $imageHeight = null;
             $imageWidth = null;
             // $originalBinaryFile = $file->get();
@@ -224,17 +224,17 @@ class BaseFileUpload extends Field
                 }
 
                 if ($maxImageWidth && $image->width() > $maxImageWidth) {
-                    $doResize = true;
+                    $shouldResize = true;
                     $imageWidth = $maxImageWidth;
                 }
 
                 if ($maxImageHeight && $image->height() > $maxImageHeight) {
-                    $doResize = true;
+                    $shouldResize = true;
                     $imageHeight = $maxImageHeight;
                 }
 
                 if ($resize) {
-                    $doResize = true;
+                    $shouldResize = true;
 
                     if ($image->height() > $image->width()) {
                         $imageHeight = $image->height() - ($image->height() * ($resize / 100));
@@ -243,7 +243,7 @@ class BaseFileUpload extends Field
                     }
                 }
 
-                if ($doResize) {
+                if ($shouldResize) {
                     $image->resize($imageWidth, $imageHeight, function ($constraint) {
                         $constraint->aspectRatio();
                     });

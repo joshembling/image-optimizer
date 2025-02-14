@@ -144,7 +144,7 @@ class SpatieMediaLibraryFileUpload extends FileUpload
             $resize = $component->getResize();
             $maxImageWidth = $component->getMaxImageWidth();
             $maxImageHeight = $component->getMaxImageHeight();
-            $doResize = false;
+            $shouldResize = false;
             $imageHeight = null;
             $imageWidth = null;
 
@@ -160,17 +160,17 @@ class SpatieMediaLibraryFileUpload extends FileUpload
                 }
 
                 if ($maxImageWidth && $image->width() > $maxImageWidth) {
-                    $doResize = true;
+                    $shouldResize = true;
                     $imageWidth = $maxImageWidth;
                 }
 
                 if ($maxImageHeight && $image->height() > $maxImageHeight) {
-                    $doResize = true;
+                    $shouldResize = true;
                     $imageHeight = $maxImageHeight;
                 }
 
                 if ($resize) {
-                    $doResize = true;
+                    $shouldResize = true;
 
                     if ($image->height() > $image->width()) {
                         $imageHeight = $image->height() - ($image->height() * ($resize / 100));
@@ -179,7 +179,7 @@ class SpatieMediaLibraryFileUpload extends FileUpload
                     }
                 }
 
-                if ($doResize) {
+                if ($shouldResize) {
                     $image->resize($imageWidth, $imageHeight, function ($constraint) {
                         $constraint->aspectRatio();
                     });
