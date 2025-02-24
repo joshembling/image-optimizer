@@ -58,6 +58,10 @@ class BaseFileUpload extends Field
 
     protected int | Closure | null $resize = null;
 
+    protected int | Closure | null $maxImageWidth = null;
+
+    protected int | Closure | null $maxImageHeight = null;
+
     protected bool | Closure $shouldPreserveFilenames = false;
 
     protected bool | Closure $shouldMoveFiles = false;
@@ -201,11 +205,16 @@ class BaseFileUpload extends Field
             $filename = $component->getUploadedFileNameForStorage($file);
             $optimize = $component->getOptimization();
             $resize = $component->getResize();
+            $maxImageWidth = $component->getMaxImageWidth();
+            $maxImageHeight = $component->getMaxImageHeight();
+            $shouldResize = false;
+            $imageHeight = null;
+            $imageWidth = null;
             // $originalBinaryFile = $file->get();
 
             if (
                 str_contains($file->getMimeType(), 'image') &&
-                ($optimize || $resize)
+                ($optimize || $resize || $maxImageWidth || $maxImageHeight)
             ) {
                 $image = InterventionImage::make($file);
 
@@ -214,17 +223,28 @@ class BaseFileUpload extends Field
                         $optimize === 'jpg' ? 70 : null;
                 }
 
+                if ($maxImageWidth && $image->width() > $maxImageWidth) {
+                    $shouldResize = true;
+                    $imageWidth = $maxImageWidth;
+                }
+
+                if ($maxImageHeight && $image->height() > $maxImageHeight) {
+                    $shouldResize = true;
+                    $imageHeight = $maxImageHeight;
+                }
+
                 if ($resize) {
-                    $height = null;
-                    $width = null;
+                    $shouldResize = true;
 
                     if ($image->height() > $image->width()) {
-                        $height = $image->height() - ($image->height() * ($resize / 100));
+                        $imageHeight = $image->height() - ($image->height() * ($resize / 100));
                     } else {
-                        $width = $image->width() - ($image->width() * ($resize / 100));
+                        $imageWidth = $image->width() - ($image->width() * ($resize / 100));
                     }
+                }
 
-                    $image->resize($width, $height, function ($constraint) {
+                if ($shouldResize) {
+                    $image->resize($imageWidth, $imageHeight, function ($constraint) {
                         $constraint->aspectRatio();
                     });
                 }
@@ -495,6 +515,20 @@ class BaseFileUpload extends Field
         return $this;
     }
 
+    public function maxImageWidth(int | Closure | null $width): static
+    {
+        $this->maxImageWidth = $width;
+
+        return $this;
+    }
+
+    public function maxImageHeight(int | Closure | null $height): static
+    {
+        $this->maxImageHeight = $height;
+
+        return $this;
+    }
+
     public function storeFiles(bool | Closure $condition = true): static
     {
         $this->shouldStoreFiles = $condition;
@@ -629,6 +663,16 @@ class BaseFileUpload extends Field
     public function getResize(): ?int
     {
         return $this->evaluate($this->resize);
+    }
+
+    public function getMaxImageWidth(): ?int
+    {
+        return $this->evaluate($this->maxImageWidth);
+    }
+
+    public function getMaxImageHeight(): ?int
+    {
+        return $this->evaluate($this->maxImageHeight);
     }
 
     public function getMaxParallelUploads(): ?int

@@ -115,6 +115,19 @@ SpatieMediaLibraryFileUpload::make('attachment')
     ->resize(50),
 `````
 
+### Add maximum width and/or height
+
+You can also add a maximum width and/or height to the image. This will resize the image to the maximum width and/or height, maintaining the aspect ratio.
+
+`````php
+use Filament\Forms\Components\FileUpload;
+
+FileUpload::make('attachment')
+    ->image()
+    ->maxWidth(1024)
+    ->maxHeight(768),
+`````
+
 ### Combining methods
 
 You can combine these two methods for maximum optimization.
