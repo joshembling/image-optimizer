@@ -2,6 +2,18 @@
 
 All notable changes to `image-optimizer` will be documented in this file.
 
+## v1.5.0 - 2025-02-24
+
+### What's Changed
+
+* Add Conditional Image Resizing Functions by @Autive in https://github.com/joshembling/image-optimizer/pull/40
+
+### New Contributors
+
+* @Autive made their first contribution in https://github.com/joshembling/image-optimizer/pull/40
+
+**Full Changelog**: https://github.com/joshembling/image-optimizer/compare/v1.4.4...v1.5.0
+
 ## v1.4.4 - 2025-01-17
 
 ### What's Changed
