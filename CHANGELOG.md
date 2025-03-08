@@ -2,6 +2,18 @@
 
 All notable changes to `image-optimizer` will be documented in this file.
 
+## v1.6.0 - 2025-03-08
+
+### What's Changed
+
+* Laravel 12 compatibility by @FinnPaes in https://github.com/joshembling/image-optimizer/pull/42
+
+### New Contributors
+
+* @FinnPaes made their first contribution in https://github.com/joshembling/image-optimizer/pull/42
+
+**Full Changelog**: https://github.com/joshembling/image-optimizer/compare/v1.5.0...v1.6.0
+
 ## v1.5.0 - 2025-02-24
 
 ### What's Changed
