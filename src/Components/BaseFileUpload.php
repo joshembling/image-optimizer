@@ -298,7 +298,7 @@ class BaseFileUpload extends Field
         ]);
     }
 
-    public function callAfterStateUpdated(): static
+    public function callAfterStateUpdated(bool $shouldBubbleToParents = true): static
     {
         $state = $this->getState();
 
