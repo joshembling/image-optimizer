@@ -84,6 +84,8 @@ class BaseFileUpload extends Field
 
     protected ?Closure $saveUploadedFileUsing = null;
 
+    protected bool | Closure $isPasteable = true;
+
     protected function setUp(): void
     {
         parent::setUp();
@@ -1020,5 +1022,16 @@ class BaseFileUpload extends Field
         }
 
         return $filename;
+    }
+
+    public function pasteable(bool | Closure $condition = true): static
+    {
+        $this->isPasteable = $condition;
+        return $this;
+    }
+
+    public function isPasteable(): bool
+    {
+        return (bool) $this->evaluate($this->isPasteable);
     }
 }
