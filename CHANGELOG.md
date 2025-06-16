@@ -2,6 +2,18 @@
 
 All notable changes to `image-optimizer` will be documented in this file.
 
+## v1.6.2 - 2025-06-16
+
+### What's Changed
+
+* fix: Undefined variable $isPasteable by @WillieOng-HK in https://github.com/joshembling/image-optimizer/pull/52
+
+### New Contributors
+
+* @WillieOng-HK made their first contribution in https://github.com/joshembling/image-optimizer/pull/52
+
+**Full Changelog**: https://github.com/joshembling/image-optimizer/compare/v1.6.1...v1.6.2
+
 ## v1.6.1 - 2025-06-12
 
 ### What's Changed
