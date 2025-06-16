@@ -1027,6 +1027,7 @@ class BaseFileUpload extends Field
     public function pasteable(bool | Closure $condition = true): static
     {
         $this->isPasteable = $condition;
+
         return $this;
     }
 
