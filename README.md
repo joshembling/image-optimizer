@@ -1,5 +1,5 @@
 > [!CAUTION]  
-> There are no plans to extend this plugin's lifetime beyond Filament v3. Please do not plan to use this in production if you are thinking of upgrading to Filament v4 when it is released in the summer of 2025.
+> There are no plans to extend this plugin's lifetime beyond Filament v3. Please do not plan to use this in production if you are using or upgrading to Filament v4.
 
 # Optimize your Filament images before they reach your database.
 
