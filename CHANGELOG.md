@@ -2,6 +2,18 @@
 
 All notable changes to `image-optimizer` will be documented in this file.
 
+## v1.6.4 - 2025-10-19
+
+### What's Changed
+
+* Fix documentation: Use correct method names for image constraints by @maytham553 in https://github.com/joshembling/image-optimizer/pull/57
+
+### New Contributors
+
+* @maytham553 made their first contribution in https://github.com/joshembling/image-optimizer/pull/57
+
+**Full Changelog**: https://github.com/joshembling/image-optimizer/compare/v1.6.3...v1.6.4
+
 ## v1.6.3 - 2025-08-26
 
 **Full Changelog**: https://github.com/joshembling/image-optimizer/compare/v1.6.2...v1.6.3
