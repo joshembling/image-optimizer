@@ -125,8 +125,8 @@ use Filament\Forms\Components\FileUpload;
 
 FileUpload::make('attachment')
     ->image()
-    ->maxWidth(1024)
-    ->maxHeight(768),
+    ->maxImageWidth(1024)
+    ->maxImageHeight(768),
 `````
 
 ### Combining methods
@@ -139,6 +139,8 @@ use Filament\Forms\Components\FileUpload;
 FileUpload::make('attachment')
 	->image()
 	->optimize('webp')
+	->maxImageWidth(1024)
+	->maxImageHeight(768)
 	->resize(50),
 `````
 
@@ -148,6 +150,8 @@ use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 SpatieMediaLibraryFileUpload::make('attachment')
     ->image()
 	->optimize('webp')
+	->maxImageWidth(1024)
+	->maxImageHeight(768)
     ->resize(50),
 `````
 
